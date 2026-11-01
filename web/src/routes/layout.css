@@ -1,3 +1,123 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+
+@theme inline {
+	--font-sans: 'Plus Jakarta Sans', sans-serif;
+
+	/* Semantic color mappings */
+	--color-bg-main: var(--bg-main);
+	--color-surface: var(--surface);
+	--color-surface-hover: var(--surface-hover);
+	--color-border-main: var(--border-main);
+
+	--color-text-primary: var(--text-primary);
+	--color-text-secondary: var(--text-secondary);
+	--color-text-muted: var(--text-muted);
+
+	--color-accent: var(--accent);
+	--color-accent-hover: var(--accent-hover);
+
+	--color-last-read: var(--last-read-bg);
+	--color-last-read-border: var(--last-read-border);
+}
+
+:root {
+	/* Default dark theme */
+	--bg-main: #0b0e14;
+	--surface: rgba(21, 26, 38, 0.75);
+	--surface-hover: rgba(33, 41, 59, 0.85);
+	--border-main: rgba(255, 255, 255, 0.1);
+
+	--text-primary: #f8fafc;
+	--text-secondary: #cbd5e1;
+	--text-muted: #64748b;
+
+	--accent: #f59e0b;
+	--accent-hover: #d97706;
+
+	--last-read-bg: rgba(245, 158, 11, 0.12);
+	--last-read-border: rgba(245, 158, 11, 0.45);
+
+	--selection-bg: #d97706;
+	--selection-text: #ffffff;
+}
+
+/* Light theme */
+[data-theme='light'] {
+	--bg-main: #ffffff;
+	--surface: rgba(244, 244, 245, 0.85);
+	--surface-hover: rgba(228, 228, 231, 0.95);
+	--border-main: rgba(0, 0, 0, 0.1);
+
+	--text-primary: #18181b;
+	--text-secondary: #3f3f46;
+	--text-muted: #71717a;
+
+	--accent: #d97706;
+	--accent-hover: #b45309;
+
+	--last-read-bg: rgba(217, 119, 6, 0.12);
+	--last-read-border: rgba(217, 119, 6, 0.45);
+
+	--selection-bg: #fde68a;
+	--selection-text: #78350f;
+}
+
+/* Sepia theme */
+[data-theme='sepia'] {
+	--bg-main: #f4ecd8;
+	--surface: rgba(235, 225, 203, 0.85);
+	--surface-hover: rgba(226, 213, 189, 0.95);
+	--border-main: rgba(67, 52, 34, 0.15);
+
+	--text-primary: #433422;
+	--text-secondary: #5f4b32;
+	--text-muted: #7c6853;
+
+	--accent: #c2410c;
+	--accent-hover: #9a3412;
+
+	--last-read-bg: rgba(194, 65, 12, 0.12);
+	--last-read-border: rgba(194, 65, 12, 0.45);
+
+	--selection-bg: #fed7aa;
+	--selection-text: #7c2d12;
+}
+
+/* Nord theme */
+[data-theme='nord'] {
+	--bg-main: #2e3440;
+	--surface: rgba(43, 49, 61, 0.85);
+	--surface-hover: rgba(67, 76, 94, 0.95);
+	--border-main: rgba(216, 222, 233, 0.15);
+
+	--text-primary: #eceff4;
+	--text-secondary: #e5e9f0;
+	--text-muted: #d8dee9;
+
+	--accent: #88c0d0;
+	--accent-hover: #81a1c1;
+
+	--last-read-bg: rgba(136, 192, 208, 0.15);
+	--last-read-border: rgba(136, 192, 208, 0.45);
+
+	--selection-bg: #5e81ac;
+	--selection-text: #eceff4;
+}
+
+/* Global selection styling */
+::selection {
+	background-color: var(--selection-bg);
+	color: var(--selection-text);
+}
+
+/* Fix font color for bold (strong) & italic (em) text across all themes */
+strong {
+	color: var(--text-primary);
+	font-weight: 700;
+}
+
+em {
+	color: var(--text-secondary);
+}
