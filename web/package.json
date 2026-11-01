@@ -39,5 +39,12 @@
 	"imports": {
 		"#lib": "./src/lib/index.js",
 		"#lib/*": "./src/lib/*"
+	},
+	"dependencies": {
+		"@giscus/svelte": "^3.1.0",
+		"@lucide/svelte": "^1.65.0",
+		"gray-matter": "^4.0.3",
+		"marked": "^18.1.2",
+		"svelte-themes": "^2.0.10"
 	}
 }
