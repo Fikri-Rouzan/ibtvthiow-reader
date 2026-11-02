@@ -106,18 +106,174 @@
 	--selection-text: #eceff4;
 }
 
+/* Dracula theme */
+[data-theme='dracula'] {
+	--bg-main: #282a36;
+	--surface: rgba(52, 55, 70, 0.85);
+	--surface-hover: rgba(68, 71, 90, 0.95);
+	--border-main: rgba(248, 248, 242, 0.15);
+
+	--text-primary: #f8f8f2;
+	--text-secondary: #e2e2dc;
+	--text-muted: #6272a4;
+
+	--accent: #bd93f9;
+	--accent-hover: #a371f7;
+
+	--last-read-bg: rgba(189, 147, 249, 0.15);
+	--last-read-border: rgba(189, 147, 249, 0.45);
+
+	--selection-bg: #44475a;
+	--selection-text: #f8f8f2;
+}
+
+/* Catppuccin theme */
+[data-theme='catppuccin'] {
+	--bg-main: #1e1e2e;
+	--surface: rgba(49, 50, 68, 0.85);
+	--surface-hover: rgba(69, 71, 90, 0.95);
+	--border-main: rgba(205, 214, 244, 0.15);
+
+	--text-primary: #cdd6f4;
+	--text-secondary: #bac2de;
+	--text-muted: #7f849c;
+
+	--accent: #cba6f7;
+	--accent-hover: #b4befe;
+
+	--last-read-bg: rgba(203, 166, 247, 0.15);
+	--last-read-border: rgba(203, 166, 247, 0.45);
+
+	--selection-bg: #585b70;
+	--selection-text: #cdd6f4;
+}
+
+/* Midnight theme */
+[data-theme='midnight'] {
+	--bg-main: #000000;
+	--surface: rgba(24, 24, 27, 0.85);
+	--surface-hover: rgba(39, 39, 42, 0.95);
+	--border-main: rgba(255, 255, 255, 0.12);
+
+	--text-primary: #f4f4f5;
+	--text-secondary: #a1a1aa;
+	--text-muted: #71717a;
+
+	--accent: #38bdf8;
+	--accent-hover: #0284c7;
+
+	--last-read-bg: rgba(56, 189, 248, 0.15);
+	--last-read-border: rgba(56, 189, 248, 0.45);
+
+	--selection-bg: #0284c7;
+	--selection-text: #ffffff;
+}
+
+/* Emerald theme */
+[data-theme='emerald'] {
+	--bg-main: #061a14;
+	--surface: rgba(11, 43, 33, 0.85);
+	--surface-hover: rgba(18, 66, 51, 0.95);
+	--border-main: rgba(167, 243, 208, 0.15);
+
+	--text-primary: #ecfdf5;
+	--text-secondary: #a7f3d0;
+	--text-muted: #34d399;
+
+	--accent: #10b981;
+	--accent-hover: #059669;
+
+	--last-read-bg: rgba(16, 185, 129, 0.15);
+	--last-read-border: rgba(16, 185, 129, 0.45);
+
+	--selection-bg: #047857;
+	--selection-text: #ffffff;
+}
+
+/* Gruvbox theme */
+[data-theme='gruvbox'] {
+	--bg-main: #282828;
+	--surface: rgba(60, 56, 54, 0.85);
+	--surface-hover: rgba(80, 73, 69, 0.95);
+	--border-main: rgba(235, 219, 178, 0.15);
+
+	--text-primary: #ebdbb2;
+	--text-secondary: #d5c4a1;
+	--text-muted: #928374;
+
+	--accent: #fe8019;
+	--accent-hover: #d65d0e;
+
+	--last-read-bg: rgba(254, 128, 25, 0.15);
+	--last-read-border: rgba(254, 128, 25, 0.45);
+
+	--selection-bg: #d65d0e;
+	--selection-text: #ebdbb2;
+}
+
+/* Rosé Pine theme */
+[data-theme='rose-pine'] {
+	--bg-main: #191724;
+	--surface: rgba(31, 29, 46, 0.85);
+	--surface-hover: rgba(38, 35, 58, 0.95);
+	--border-main: rgba(224, 222, 244, 0.15);
+
+	--text-primary: #e0def4;
+	--text-secondary: #c4a7e7;
+	--text-muted: #908caa;
+
+	--accent: #ebbcba;
+	--accent-hover: #d7827e;
+
+	--last-read-bg: rgba(235, 188, 186, 0.15);
+	--last-read-border: rgba(235, 188, 186, 0.45);
+
+	--selection-bg: #2a283e;
+	--selection-text: #e0def4;
+}
+
 /* Global selection styling */
 ::selection {
 	background-color: var(--selection-bg);
 	color: var(--selection-text);
 }
 
-/* Fix font color for bold (strong) & italic (em) text across all themes */
-strong {
-	color: var(--text-primary);
-	font-weight: 700;
+/* Scrollbar colors */
+html,
+body,
+[data-theme] {
+	scrollbar-color: var(--color-accent) var(--bg-main);
 }
 
-em {
-	color: var(--text-secondary);
+::-webkit-scrollbar-track {
+	background-color: var(--bg-main);
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: var(--color-accent);
+}
+
+/* Page opacity masking & Instant transition disabler */
+html.page-loading [data-page-container] {
+	opacity: 0 !important;
+	pointer-events: none !important;
+}
+
+[data-page-container] {
+	opacity: 1;
+	transition: opacity 0.12s ease-out;
+}
+
+html.no-transitions,
+html.no-transitions * {
+	transition: none !important;
+}
+
+/* Chapter content typography styling bound to CSS custom variables */
+.chapter-content {
+	font-size: var(--reader-font-size);
+	font-family: var(--reader-font-family);
+	line-height: var(--reader-line-height);
+	font-weight: var(--reader-font-weight);
+	text-align: var(--reader-text-align);
 }

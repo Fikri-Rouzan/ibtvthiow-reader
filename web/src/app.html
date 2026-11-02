@@ -10,9 +10,37 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+			href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&family=Lora:ital,wght@0,400..700;1,400..700&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap"
 			rel="stylesheet"
 		/>
+
+		<!-- Inline blocking script to apply reader settings before first contentful paint -->
+		<script>
+			(function () {
+				try {
+					var docEl = document.documentElement;
+					docEl.classList.add('page-loading', 'no-transitions');
+
+					var currentPath = window.location.pathname;
+					if (currentPath.indexOf('/ibtvthiow/chapter/') !== -1) {
+						var saved = localStorage.getItem('ibtvthiow_reader_settings');
+						if (saved) {
+							var p = JSON.parse(saved);
+							if (p.theme) docEl.setAttribute('data-theme', p.theme);
+							if (p.fontSize) docEl.style.setProperty('--reader-font-size', p.fontSize + 'px');
+							if (p.fontFamily) docEl.style.setProperty('--reader-font-family', p.fontFamily);
+							if (p.lineHeight) docEl.style.setProperty('--reader-line-height', p.lineHeight);
+							if (p.fontWeight) docEl.style.setProperty('--reader-font-weight', p.fontWeight);
+							if (p.textAlign) docEl.style.setProperty('--reader-text-align', p.textAlign);
+						}
+					} else {
+						docEl.removeAttribute('data-theme');
+					}
+				} catch (err) {
+					// Silent fallback for storage access restrictions
+				}
+			})();
+		</script>
 
 		%sveltekit.head%
 	</head>

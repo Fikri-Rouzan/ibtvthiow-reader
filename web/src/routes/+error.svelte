@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { ArrowLeft, Globe } from '@lucide/svelte';
@@ -8,6 +9,19 @@
 			window.history.back();
 		}
 	}
+
+	// Ensure reader theme attribute is stripped immediately on error page mount
+	onMount(() => {
+		if (typeof document !== 'undefined') {
+			document.documentElement.removeAttribute('data-theme');
+		}
+	});
+
+	$effect(() => {
+		if (typeof document !== 'undefined') {
+			document.documentElement.removeAttribute('data-theme');
+		}
+	});
 </script>
 
 <svelte:head>

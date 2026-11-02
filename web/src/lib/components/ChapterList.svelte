@@ -16,7 +16,7 @@
 		{@const isLastRead = chapter.slug === lastReadSlug}
 		<a
 			href={resolve('/ibtvthiow/chapter/[slug]', { slug: chapter.slug })}
-			class="group flex items-center justify-between rounded-lg px-3.5 py-2.5 text-xs transition-colors hover:border-accent hover:bg-surface-hover sm:px-4 sm:py-3 sm:text-sm {isLastRead
+			class="group flex items-center justify-between rounded-lg px-3.5 py-2.5 text-xs transition-colors hover:border-accent-hover hover:bg-accent/40 hover:text-bg-main sm:px-4 sm:py-3 sm:text-sm {isLastRead
 				? 'border border-last-read-border bg-last-read font-semibold text-accent'
 				: 'border border-border-main bg-surface text-text-secondary'}"
 		>

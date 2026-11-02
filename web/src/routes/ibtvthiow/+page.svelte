@@ -108,7 +108,7 @@
 
 				<!-- Right column: Metadata overview -->
 				<div class="space-y-3 pt-1 text-left md:col-span-8 md:pt-2 lg:col-span-9">
-					<h1 class="text-2xl leading-tight font-bold text-text-primary sm:text-3xl md:text-4xl">
+					<h1 class="text-2xl leading-tight font-bold text-accent sm:text-3xl md:text-4xl">
 						{data.metadata.title}
 					</h1>
 
