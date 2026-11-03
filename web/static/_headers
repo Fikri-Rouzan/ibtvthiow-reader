@@ -1,0 +1,4 @@
+/giscus-theme.css
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, OPTIONS
+  Content-Type: text/css; charset=utf-8

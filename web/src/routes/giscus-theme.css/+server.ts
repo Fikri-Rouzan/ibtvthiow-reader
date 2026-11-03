@@ -1,6 +1,8 @@
 import type { RequestHandler } from './$types';
 import type { ReaderTheme } from '#lib/types/reader';
 
+export const prerender = false;
+
 interface ThemeColorSpec {
 	bg: string;
 	surface: string;
@@ -192,8 +194,20 @@ export const GET: RequestHandler = ({ url }) => {
 
 	return new Response(cssContent, {
 		headers: {
-			'Content-Type': 'text/css',
+			'Content-Type': 'text/css; charset=utf-8',
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Methods': 'GET, OPTIONS',
 			'Cache-Control': 'public, max-age=3600'
+		}
+	});
+};
+
+export const OPTIONS: RequestHandler = () => {
+	return new Response(null, {
+		headers: {
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Methods': 'GET, OPTIONS',
+			'Access-Control-Allow-Headers': 'Content-Type'
 		}
 	});
 };
