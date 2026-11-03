@@ -3,6 +3,10 @@ import type { PageServerLoad } from './$types';
 import { getChapterBySlug, getNovelMetadata } from '#lib/server/reader';
 
 export const load: PageServerLoad = async ({ params }) => {
+	if (!/^\d+$/.test(params.slug)) {
+		error(404, `Chapter ${params.slug} not found`);
+	}
+
 	const [metadata, chapter] = await Promise.all([
 		getNovelMetadata(),
 		getChapterBySlug(params.slug)
