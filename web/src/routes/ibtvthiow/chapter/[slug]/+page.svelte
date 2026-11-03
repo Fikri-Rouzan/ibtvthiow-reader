@@ -2,7 +2,6 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { cubicOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
-	import { resolve } from '$app/paths';
 	import type { PageData } from './$types';
 	import { getReaderSettings, setLastReadChapter, setReaderSettings } from '#lib/utils/storage';
 	import type { DrawerType, ReaderSettings } from '#lib/types/reader';
@@ -11,7 +10,9 @@
 	import Drawer from '#lib/components/chapter/Drawer.svelte';
 	import ChaptersDrawerContent from '#lib/components/chapter/ChaptersDrawerContent.svelte';
 	import SettingsDrawerContent from '#lib/components/chapter/SettingsDrawerContent.svelte';
-	import { ArrowLeft, ArrowRight, House } from '@lucide/svelte';
+	import Navigation from '#lib/components/chapter/Navigation.svelte';
+	import KeyboardShortcuts from '#lib/components/chapter/KeyboardShortcuts.svelte';
+	import GiscusComments from '#lib/components/chapter/GiscusComments.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -46,10 +47,6 @@
 			document.documentElement.removeAttribute('data-theme');
 		}
 	});
-
-	const NAV_BTN_CLASS =
-		'inline-flex items-center gap-2 rounded-xl border border-accent bg-surface px-4 py-2.5 text-xs font-semibold text-text-primary shadow-md transition-colors hover:border-accent-hover hover:bg-accent hover:text-bg-main sm:px-5 sm:py-3 sm:text-sm';
-	const NAV_ICON_CLASS = 'h-4 w-4 shrink-0 sm:h-5 sm:w-5';
 </script>
 
 <svelte:head>
@@ -67,59 +64,39 @@
 		>
 			<!-- Article view -->
 			<article class="space-y-6">
-				<h1
-					class="border-b border-border-main pb-4 text-center text-2xl leading-tight font-bold text-accent sm:text-3xl md:text-4xl lg:text-5xl"
-				>
-					{data.chapter.meta.title}
-				</h1>
+				{#key settings.fontFamily + settings.textAlign}
+					<div in:fade={{ duration: 180, easing: cubicOut }} class="space-y-6">
+						<div class="flex flex-col items-center gap-4 text-center">
+							<h1
+								class="text-2xl leading-tight font-bold text-accent sm:text-3xl md:text-4xl lg:text-5xl"
+							>
+								{data.chapter.meta.title}
+							</h1>
+							<div class="h-1 w-28 rounded-full bg-accent sm:w-36 md:w-40"></div>
+						</div>
 
-				<!-- Chapter content -->
-				<div
-					class="chapter-content transition-[font-size, line-height, font-weight] duration-300 ease-out"
-				>
-					{#key settings.fontFamily + settings.textAlign}
-						<div in:fade={{ duration: 180, easing: cubicOut }}>
+						<!-- Chapter content -->
+						<div
+							class="chapter-content transition-[font-size,line-height,font-weight] duration-300 ease-out"
+						>
 							<MarkdownRenderer tokens={data.chapter.tokens} />
 						</div>
-					{/key}
-				</div>
+					</div>
+				{/key}
 			</article>
 
 			<!-- Bottom navigation -->
-			<nav
-				class="flex items-center justify-between border-t border-border-main pt-6"
-				aria-label="Chapter navigation"
-			>
-				{#if data.prevSlug !== null}
-					<a
-						href={resolve('/ibtvthiow/chapter/[slug]', { slug: data.prevSlug })}
-						class={NAV_BTN_CLASS}
-					>
-						<ArrowLeft class={NAV_ICON_CLASS} />
-						<span>Previous</span>
-					</a>
-				{:else}
-					<a href={resolve('/ibtvthiow')} class={NAV_BTN_CLASS}>
-						<House class={NAV_ICON_CLASS} />
-						<span>Home</span>
-					</a>
-				{/if}
+			<Navigation
+				prevSlug={data.prevSlug}
+				nextSlug={data.nextSlug}
+				chapterIndex={data.chapter.meta.index}
+			/>
 
-				{#if data.nextSlug !== null}
-					<a
-						href={resolve('/ibtvthiow/chapter/[slug]', { slug: data.nextSlug })}
-						class={NAV_BTN_CLASS}
-					>
-						<span>Next</span>
-						<ArrowRight class={NAV_ICON_CLASS} />
-					</a>
-				{:else}
-					<a href={resolve('/ibtvthiow')} class={NAV_BTN_CLASS}>
-						<span>Home</span>
-						<House class={NAV_ICON_CLASS} />
-					</a>
-				{/if}
-			</nav>
+			<!-- Keyboard shortcuts guide -->
+			<KeyboardShortcuts />
+
+			<!-- Comments section -->
+			<GiscusComments term={data.chapter.meta.title} theme={settings.theme} />
 		</main>
 	{/key}
 
@@ -131,7 +108,7 @@
 
 	<Drawer
 		isOpen={activeDrawer === 'chapters'}
-		title="Table of Contents"
+		title="Chapters List"
 		onClose={() => (activeDrawer = null)}
 	>
 		<ChaptersDrawerContent

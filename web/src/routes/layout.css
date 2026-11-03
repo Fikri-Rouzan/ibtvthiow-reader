@@ -270,9 +270,13 @@ html.no-transitions * {
 }
 
 /* Chapter content typography styling bound to CSS custom variables */
+article h1,
+.chapter-content {
+	font-family: var(--reader-font-family);
+}
+
 .chapter-content {
 	font-size: var(--reader-font-size);
-	font-family: var(--reader-font-family);
 	line-height: var(--reader-line-height);
 	font-weight: var(--reader-font-weight);
 	text-align: var(--reader-text-align);

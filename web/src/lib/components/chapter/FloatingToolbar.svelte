@@ -10,6 +10,7 @@
 		List,
 		Maximize,
 		Minimize,
+		MessageSquare,
 		Pause,
 		Play,
 		Settings
@@ -54,9 +55,13 @@
 		);
 	}
 
-	/**
-	 * Handles keyboard shortcuts across the reader view.
-	 */
+	function scrollToComments() {
+		const commentsEl = document.getElementById('comments-section');
+		if (commentsEl) {
+			commentsEl.scrollIntoView({ behavior: 'smooth' });
+		}
+	}
+
 	function handleKeydown(e: KeyboardEvent) {
 		if (isUserTyping(e)) return;
 
@@ -74,6 +79,10 @@
 			case 't':
 				e.preventDefault();
 				onToggleDrawer('chapters');
+				break;
+			case 'c':
+				e.preventDefault();
+				scrollToComments();
 				break;
 			case 'p':
 				e.preventDefault();
@@ -236,6 +245,17 @@
 		class="{TOOLBAR_BTN_CLASS} cursor-pointer text-text-muted"
 	>
 		<List class={TOOLBAR_ICON_CLASS} />
+	</button>
+
+	<!-- Jump to comments -->
+	<button
+		type="button"
+		onclick={scrollToComments}
+		aria-label="Jump to Comments"
+		title="Comments (C)"
+		class="{TOOLBAR_BTN_CLASS} cursor-pointer text-text-muted"
+	>
+		<MessageSquare class={TOOLBAR_ICON_CLASS} />
 	</button>
 
 	<!-- Auto scroll -->
