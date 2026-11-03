@@ -75,13 +75,15 @@
 		href={resolve('/')}
 		aria-label="Go back"
 		title="Go Back"
-		class="fixed top-4 left-4 z-50 inline-flex cursor-pointer items-center justify-center rounded-full border border-border-main bg-surface/80 p-2.5 text-text-muted shadow-lg backdrop-blur-md transition-colors hover:border-accent hover:text-accent sm:top-6 sm:left-6"
+		class="fixed top-6 left-4 z-50 inline-flex cursor-pointer items-center justify-center rounded-full border border-border-main bg-surface/80 p-2.5 text-text-muted shadow-lg backdrop-blur-md transition-colors hover:border-accent hover:text-accent sm:top-8 sm:left-6"
 	>
 		<ArrowLeft class="h-5 w-5 sm:h-6 sm:w-6" />
 	</a>
 
 	<div class="flex grow flex-col bg-bg-main/80">
-		<main class="mx-auto w-full max-w-5xl grow space-y-8 px-4 py-6 sm:px-6 sm:py-10">
+		<main
+			class="mx-auto w-full max-w-5xl grow space-y-10 px-4 pt-10 pb-6 sm:px-6 sm:pt-14 sm:pb-10"
+		>
 			<header class="grid grid-cols-1 items-start gap-6 md:grid-cols-12">
 				<!-- Left column: Cover image and CTA -->
 				<div class="flex flex-col items-center gap-4 md:col-span-4 md:items-start lg:col-span-3">
@@ -132,7 +134,7 @@
 			</header>
 
 			<!-- Catalog controls & Chapter list -->
-			<section class="space-y-4" aria-label="Chapter catalog and controls">
+			<section class="space-y-4 pt-2" aria-label="Chapter catalog and controls">
 				<div class="flex items-center gap-2">
 					<SearchBar bind:value={searchQuery} />
 					<SortButton bind:sortOrder onSortChange={() => (currentPage = 1)} />

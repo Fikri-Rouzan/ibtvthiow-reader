@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ArrowDown, ArrowUp } from '@lucide/svelte';
+	import { ArrowUp } from '@lucide/svelte';
 	import type { SortDirection } from '#lib/types/novel';
 
 	let {
@@ -27,9 +27,10 @@
 >
 	<span class="hidden sm:inline">{sortOrder === 'asc' ? 'Ascending' : 'Descending'}</span>
 	<span class="uppercase sm:hidden">{sortOrder}</span>
-	{#if sortOrder === 'asc'}
-		<ArrowUp class="h-3.5 w-3.5 text-accent sm:h-4 sm:w-4" />
-	{:else}
-		<ArrowDown class="h-3.5 w-3.5 text-accent sm:h-4 sm:w-4" />
-	{/if}
+	<ArrowUp
+		class="h-3.5 w-3.5 text-accent transition-transform duration-300 sm:h-4 sm:w-4 {sortOrder ===
+		'desc'
+			? 'rotate-180'
+			: ''}"
+	/>
 </button>

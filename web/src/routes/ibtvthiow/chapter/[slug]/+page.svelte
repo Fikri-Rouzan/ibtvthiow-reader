@@ -65,8 +65,8 @@
 			<!-- Article view -->
 			<article class="space-y-6">
 				{#key settings.fontFamily + settings.textAlign}
-					<div in:fade={{ duration: 180, easing: cubicOut }} class="space-y-6">
-						<div class="flex flex-col items-center gap-4 text-center">
+					<div in:fade={{ duration: 180, easing: cubicOut }} class="space-y-16 sm:space-y-20">
+						<div class="flex flex-col items-center gap-5 pt-3 text-center sm:gap-6 sm:pt-5">
 							<h1
 								class="text-2xl leading-tight font-bold text-accent sm:text-3xl md:text-4xl lg:text-5xl"
 							>
@@ -77,7 +77,7 @@
 
 						<!-- Chapter content -->
 						<div
-							class="chapter-content transition-[font-size,line-height,font-weight] duration-300 ease-out"
+							class="chapter-content transition-[font-size, line-height, font-weight] mb-10 duration-300 ease-out sm:mb-14"
 						>
 							<MarkdownRenderer tokens={data.chapter.tokens} />
 						</div>

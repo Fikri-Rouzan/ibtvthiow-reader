@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { cubicOut } from 'svelte/easing';
+	import { fly } from 'svelte/transition';
 	import {
 		DEFAULT_READER_SETTINGS,
 		FONT_OPTIONS,
@@ -104,6 +106,7 @@
 		{#if isThemeOpen}
 			<div
 				role="listbox"
+				transition:fly={{ y: -6, duration: 250, easing: cubicOut }}
 				class="absolute top-full right-0 left-0 z-20 mt-1 max-h-56 overflow-y-auto rounded-lg border border-border-main bg-surface p-1 shadow-xl backdrop-blur-md"
 			>
 				{#each THEMES as t (t.id)}
@@ -148,6 +151,7 @@
 		{#if isFontOpen}
 			<div
 				role="listbox"
+				transition:fly={{ y: -6, duration: 250, easing: cubicOut }}
 				class="absolute top-full right-0 left-0 z-20 mt-1 max-h-60 overflow-y-auto rounded-lg border border-border-main bg-surface p-1 shadow-xl backdrop-blur-md"
 			>
 				{#each FONT_OPTIONS as font (font.id)}

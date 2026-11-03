@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/state';
 	import { giscusAction } from '#lib/actions/giscus';
 	import { getCommentCount } from '#lib/services/giscusService';
 	import type { ReaderTheme } from '#lib/types/reader';
@@ -24,32 +25,11 @@
 		}
 	});
 
-	// Giscus themes
-	let giscusTheme = $derived.by(() => {
-		switch (theme) {
-			case 'light':
-				return 'light';
-			case 'sepia':
-				return 'sepia';
-			case 'nord':
-				return 'nord';
-			case 'dracula':
-				return 'dracula';
-			case 'catppuccin':
-				return 'catppuccin_mocha';
-			case 'gruvbox':
-				return 'gruvbox';
-			case 'rose-pine':
-				return 'rose_pine';
-			case 'emerald':
-				return 'dark_dimmed';
-			case 'midnight':
-				return 'noborder_gray';
-			case 'dark':
-			default:
-				return 'transparent_dark';
-		}
-	});
+	// Derive absolute origin URL for CSS endpoint
+	let siteOrigin = $derived(page.url.origin);
+
+	// Direct all themes to the dynamic server endpoint
+	let giscusTheme = $derived(`${siteOrigin}/giscus-theme.css?theme=${theme}`);
 </script>
 
 {#if term}
