@@ -19,17 +19,13 @@ main {
 	--color-accent-fg: #10b981 !important;
 	--color-accent-emphasis: #059669 !important;
 
-	--color-btn-text: #061a14 !important;
-	--color-btn-bg: #10b981 !important;
-	--color-btn-border: #10b981 !important;
-	--color-btn-hover-bg: #059669 !important;
-	--color-btn-hover-border: #059669 !important;
+	--color-btn-text: #ecfdf5 !important;
+	--color-btn-bg: #0b2b21 !important;
+	--color-btn-border: rgba(167, 243, 208, 0.15) !important;
 
 	--color-btn-primary-text: #061a14 !important;
 	--color-btn-primary-bg: #10b981 !important;
 	--color-btn-primary-border: #10b981 !important;
-	--color-btn-primary-hover-bg: #059669 !important;
-	--color-btn-primary-hover-border: #059669 !important;
 }
 
 .gsc-comment-box,
@@ -37,13 +33,17 @@ main {
 .gsc-reply-box {
 	background-color: #0b2b21 !important;
 	border: 1px solid rgba(167, 243, 208, 0.15) !important;
+	box-shadow: none !important;
+	outline: none !important;
 }
 
 .gsc-comment-box-textarea,
 .gsc-comment-box-textarea:focus {
 	background-color: #061a14 !important;
 	color: #ecfdf5 !important;
-	border-color: rgba(167, 243, 208, 0.15) !important;
+	border: 1px solid rgba(167, 243, 208, 0.15) !important;
+	box-shadow: none !important;
+	outline: none !important;
 }
 
 .gsc-comment-box-textarea::placeholder {
@@ -56,4 +56,25 @@ main {
 .gsc-comment-footer {
 	background-color: transparent !important;
 	border-color: rgba(167, 243, 208, 0.15) !important;
+}
+
+.gsc-header .btn,
+.gsc-header button,
+.gsc-header-command button {
+	color: #ecfdf5 !important;
+	background-color: #0b2b21 !important;
+	border: 1px solid rgba(167, 243, 208, 0.15) !important;
+	box-shadow: none !important;
+}
+
+.gsc-header .btn-primary,
+.gsc-header button[aria-current='true'],
+.gsc-header button[aria-selected='true'],
+.gsc-header button.active,
+.gsc-header .btn:hover,
+.gsc-header button:hover {
+	background-color: #10b981 !important;
+	color: #061a14 !important;
+	border: 1px solid #10b981 !important;
+	box-shadow: none !important;
 }
