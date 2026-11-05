@@ -1,12 +1,3 @@
-*,
-*::before,
-*::after {
-	transition:
-		color 200ms cubic-bezier(0.4, 0, 0.2, 1),
-		background-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
-		border-color 200ms cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
-
 main {
 	--color-canvas-default: transparent !important;
 	--color-canvas-overlay: #1f1d2e !important;
@@ -19,9 +10,9 @@ main {
 	--color-accent-fg: #ebbcba !important;
 	--color-accent-emphasis: #d7827e !important;
 
-	--color-btn-text: #e0def4 !important;
-	--color-btn-bg: #1f1d2e !important;
-	--color-btn-border: rgba(224, 222, 244, 0.15) !important;
+	--color-btn-text: #c4a7e7 !important;
+	--color-btn-bg: transparent !important;
+	--color-btn-border: transparent !important;
 
 	--color-btn-primary-text: #191724 !important;
 	--color-btn-primary-bg: #ebbcba !important;
@@ -38,7 +29,8 @@ main {
 }
 
 .gsc-comment-box-textarea,
-.gsc-comment-box-textarea:focus {
+.gsc-comment-box-textarea:focus,
+.gsc-comment-box-textarea:active {
 	background-color: #191724 !important;
 	color: #e0def4 !important;
 	border: 1px solid rgba(224, 222, 244, 0.15) !important;
@@ -61,20 +53,43 @@ main {
 .gsc-header .btn,
 .gsc-header button,
 .gsc-header-command button {
-	color: #e0def4 !important;
-	background-color: #1f1d2e !important;
-	border: 1px solid rgba(224, 222, 244, 0.15) !important;
+	background-color: transparent !important;
+	color: #c4a7e7 !important;
+	border: none !important;
 	box-shadow: none !important;
+	outline: none !important;
 }
 
 .gsc-header .btn-primary,
 .gsc-header button[aria-current='true'],
 .gsc-header button[aria-selected='true'],
-.gsc-header button.active,
-.gsc-header .btn:hover,
-.gsc-header button:hover {
+.gsc-header button.active {
 	background-color: #ebbcba !important;
 	color: #191724 !important;
-	border: 1px solid #ebbcba !important;
+	border: none !important;
 	box-shadow: none !important;
+	outline: none !important;
+}
+
+.gsc-header .btn:hover,
+.gsc-header button:hover,
+.gsc-header button:focus,
+.gsc-header button:active,
+.gsc-header button:focus-visible {
+	background-color: transparent !important;
+	color: #c4a7e7 !important;
+	border: none !important;
+	box-shadow: none !important;
+	outline: none !important;
+}
+
+.gsc-header .btn-primary:hover,
+.gsc-header button[aria-current='true']:hover,
+.gsc-header button[aria-selected='true']:hover,
+.gsc-header button.active:hover {
+	background-color: #ebbcba !important;
+	color: #191724 !important;
+	border: none !important;
+	box-shadow: none !important;
+	outline: none !important;
 }
