@@ -26,22 +26,33 @@ main {
 	--color-btn-primary-border: #10b981 !important;
 }
 
+details,
+summary,
+.dropdown,
+.gsc-header-command,
+.btn-group,
+.gsc-timeline-comment-main,
+.gsc-comment-header,
+.gsc-comment-footer,
+.gsc-comment-box-bottom,
+.gsc-comment-box-tabs {
+	border: none !important;
+	background-color: transparent !important;
+	box-shadow: none !important;
+	outline: none !important;
+}
+
 .gsc-comment-box,
 .gsc-timeline-comment,
-.gsc-timeline-comment-main,
 .gsc-comment,
-.gsc-reply-box,
-.gsc-timeline-item,
-.gsc-comment-box-textarea-container {
+.gsc-reply-box {
 	background-color: #0b2b21 !important;
 	border: 1px solid rgba(167, 243, 208, 0.15) !important;
 	box-shadow: none !important;
 	outline: none !important;
 }
 
-.gsc-comment-box-textarea,
-.gsc-comment-box-textarea:focus,
-.gsc-comment-box-textarea:active {
+.gsc-comment-box-textarea {
 	background-color: #061a14 !important;
 	color: #ecfdf5 !important;
 	border: 1px solid rgba(167, 243, 208, 0.15) !important;
@@ -53,17 +64,14 @@ main {
 	color: #34d399 !important;
 }
 
-.gsc-header,
-.gsc-comment-box-bottom,
-.gsc-comment-header,
-.gsc-comment-footer,
-.gsc-comment-box-tabs {
+.gsc-header {
 	background-color: transparent !important;
 	border-color: rgba(167, 243, 208, 0.15) !important;
 }
 
 .btn,
 button,
+summary.btn,
 .gsc-header button,
 .gsc-header-command button,
 .tabnav-tab,
@@ -80,9 +88,15 @@ button,
 button[type='submit'],
 .gsc-comment-box-buttons button[type='submit'],
 .gsc-header button[aria-current='true'],
+.gsc-header button[aria-current='page'],
 .gsc-header button[aria-selected='true'],
+.gsc-header button[aria-checked='true'],
+.gsc-header button[data-current='true'],
 .gsc-header button.active,
 .gsc-header .btn-primary,
+.gsc-header-command button[aria-current='true'],
+.gsc-header-command button[aria-selected='true'],
+.gsc-header-command button.active,
 [role='tab'][aria-selected='true'],
 .tabnav-tab[aria-selected='true'],
 .tabnav-tab.selected {
