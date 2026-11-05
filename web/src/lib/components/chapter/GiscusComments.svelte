@@ -28,8 +28,8 @@
 	// Derive absolute origin URL for CSS endpoint
 	let siteOrigin = $derived(page.url.origin);
 
-	// Direct all themes to the dynamic server endpoint
-	let giscusTheme = $derived(`${siteOrigin}/giscus-theme.css?theme=${theme}`);
+	// Direct static CSS file mapping
+	let giscusTheme = $derived(`${siteOrigin}/giscus/${theme}.css`);
 </script>
 
 {#if term}

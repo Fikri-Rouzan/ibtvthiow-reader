@@ -1,0 +1,50 @@
+main {
+	--color-canvas-default: #282828 !important;
+	--color-canvas-overlay: #3c3836 !important;
+	--color-canvas-subtle: #3c3836 !important;
+	--color-border-default: rgba(235, 219, 178, 0.15) !important;
+	--color-border-muted: rgba(235, 219, 178, 0.15) !important;
+	--color-fg-default: #ebdbb2 !important;
+	--color-fg-muted: #928374 !important;
+	--color-fg-subtle: #d5c4a1 !important;
+	--color-accent-fg: #fe8019 !important;
+	--color-accent-emphasis: #d65d0e !important;
+
+	--color-btn-text: #282828 !important;
+	--color-btn-bg: #fe8019 !important;
+	--color-btn-border: #fe8019 !important;
+	--color-btn-hover-bg: #d65d0e !important;
+	--color-btn-hover-border: #d65d0e !important;
+
+	--color-btn-primary-text: #282828 !important;
+	--color-btn-primary-bg: #fe8019 !important;
+	--color-btn-primary-border: #fe8019 !important;
+	--color-btn-primary-hover-bg: #d65d0e !important;
+	--color-btn-primary-hover-border: #d65d0e !important;
+}
+
+.gsc-comment-box,
+.gsc-timeline-comment,
+.gsc-reply-box,
+.gsc-header {
+	background-color: #3c3836 !important;
+	border-color: rgba(235, 219, 178, 0.15) !important;
+}
+
+.gsc-comment-box-textarea,
+.gsc-comment-box-textarea:focus {
+	background-color: #282828 !important;
+	color: #ebdbb2 !important;
+	border-color: rgba(235, 219, 178, 0.15) !important;
+}
+
+.gsc-comment-box-textarea::placeholder {
+	color: #928374 !important;
+}
+
+.gsc-comment-box-bottom,
+.gsc-comment-header,
+.gsc-comment-footer {
+	background-color: transparent !important;
+	border-color: rgba(235, 219, 178, 0.15) !important;
+}
