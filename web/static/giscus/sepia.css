@@ -1,14 +1,7 @@
-*,
-*::before,
-*::after {
-	box-shadow: none !important;
-	outline: none !important;
-}
-
 main {
-	--color-canvas-default: transparent !important;
+	--color-canvas-default: #f4ecd8 !important;
 	--color-canvas-overlay: #ebe1cb !important;
-	--color-canvas-subtle: transparent !important;
+	--color-canvas-subtle: #ebe1cb !important;
 	--color-border-default: rgba(67, 52, 34, 0.15) !important;
 	--color-border-muted: rgba(67, 52, 34, 0.15) !important;
 	--color-fg-default: #433422 !important;
@@ -17,92 +10,41 @@ main {
 	--color-accent-fg: #c2410c !important;
 	--color-accent-emphasis: #9a3412 !important;
 
-	--color-btn-text: #433422 !important;
-	--color-btn-bg: transparent !important;
-	--color-btn-border: rgba(67, 52, 34, 0.15) !important;
+	--color-btn-text: #ffffff !important;
+	--color-btn-bg: #c2410c !important;
+	--color-btn-border: #c2410c !important;
+	--color-btn-hover-bg: #9a3412 !important;
+	--color-btn-hover-border: #9a3412 !important;
 
 	--color-btn-primary-text: #ffffff !important;
 	--color-btn-primary-bg: #c2410c !important;
 	--color-btn-primary-border: #c2410c !important;
-}
-
-details,
-summary,
-.dropdown,
-.gsc-header-command,
-.btn-group,
-.gsc-timeline-comment-main,
-.gsc-comment-header,
-.gsc-comment-footer,
-.gsc-comment-box-bottom,
-.gsc-comment-box-tabs {
-	border: none !important;
-	background-color: transparent !important;
-	box-shadow: none !important;
-	outline: none !important;
+	--color-btn-primary-hover-bg: #9a3412 !important;
+	--color-btn-primary-hover-border: #9a3412 !important;
 }
 
 .gsc-comment-box,
 .gsc-timeline-comment,
-.gsc-comment,
-.gsc-reply-box {
+.gsc-reply-box,
+.gsc-header {
 	background-color: #ebe1cb !important;
-	border: 1px solid rgba(67, 52, 34, 0.15) !important;
-	box-shadow: none !important;
-	outline: none !important;
+	border-color: rgba(67, 52, 34, 0.15) !important;
 }
 
-.gsc-comment-box-textarea {
+.gsc-comment-box-textarea,
+.gsc-comment-box-textarea:focus {
 	background-color: #f4ecd8 !important;
 	color: #433422 !important;
-	border: 1px solid rgba(67, 52, 34, 0.15) !important;
-	box-shadow: none !important;
-	outline: none !important;
+	border-color: rgba(67, 52, 34, 0.15) !important;
 }
 
 .gsc-comment-box-textarea::placeholder {
 	color: #7c6853 !important;
 }
 
-.gsc-header {
+.gsc-comment-box-bottom,
+.gsc-comment-header,
+.gsc-comment-footer {
 	background-color: transparent !important;
 	border-color: rgba(67, 52, 34, 0.15) !important;
-}
-
-.btn,
-button,
-summary.btn,
-.gsc-header button,
-.gsc-header-command button,
-.tabnav-tab,
-.gsc-reply-box-cancel-button,
-.gsc-comment-box-buttons button {
-	background-color: transparent !important;
-	color: #433422 !important;
-	border: 1px solid rgba(67, 52, 34, 0.15) !important;
-	box-shadow: none !important;
-	outline: none !important;
-}
-
-.btn-primary,
-button[type='submit'],
-.gsc-comment-box-buttons button[type='submit'],
-.gsc-header button[aria-current='true'],
-.gsc-header button[aria-current='page'],
-.gsc-header button[aria-selected='true'],
-.gsc-header button[aria-checked='true'],
-.gsc-header button[data-current='true'],
-.gsc-header button.active,
-.gsc-header .btn-primary,
-.gsc-header-command button[aria-current='true'],
-.gsc-header-command button[aria-selected='true'],
-.gsc-header-command button.active,
-[role='tab'][aria-selected='true'],
-.tabnav-tab[aria-selected='true'],
-.tabnav-tab.selected {
-	background-color: #c2410c !important;
-	color: #ffffff !important;
-	border: 1px solid #c2410c !important;
-	box-shadow: none !important;
-	outline: none !important;
 }
