@@ -25,8 +25,7 @@ main {
 
 .gsc-comment-box,
 .gsc-timeline-comment,
-.gsc-reply-box,
-.gsc-header {
+.gsc-reply-box {
 	background-color: #3c3836 !important;
 	border-color: rgba(235, 219, 178, 0.15) !important;
 }
@@ -42,9 +41,19 @@ main {
 	color: #928374 !important;
 }
 
+.gsc-header,
 .gsc-comment-box-bottom,
 .gsc-comment-header,
 .gsc-comment-footer {
 	background-color: transparent !important;
 	border-color: rgba(235, 219, 178, 0.15) !important;
+}
+
+.BtnGroup-item:not(.BtnGroup-item--selected) .btn {
+	color: var(--color-fg-default) !important;
+	background-color: transparent !important;
+}
+
+.BtnGroup-item:not(.BtnGroup-item--selected) .btn:hover {
+	color: var(--color-accent-fg) !important;
 }
