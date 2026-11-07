@@ -24,8 +24,7 @@ main {
 }
 
 .gsc-comment-box,
-.gsc-timeline-comment,
-.gsc-reply-box {
+.gsc-timeline-comment {
 	background-color: #343746 !important;
 	border-color: rgba(248, 248, 242, 0.15) !important;
 }
@@ -111,9 +110,17 @@ main {
 .gsc-comment-box-tabs,
 .gsc-replies,
 .gsc-replies .gsc-reply,
-.color-bg-inset {
+.color-bg-inset,
+.gsc-reply-box {
 	background-color: var(--color-canvas-default) !important;
 	border-color: var(--color-border-default) !important;
+}
+
+.gsc-reply-box button,
+.gsc-reply-box .form-control {
+	background-color: var(--color-canvas-overlay) !important;
+	border-color: var(--color-border-default) !important;
+	color: var(--color-fg-default) !important;
 }
 
 ::selection {
