@@ -59,6 +59,10 @@ main {
 	color: var(--color-accent-fg) !important;
 }
 
+.gsc-comment-box-tabs button.color-bg-canvas {
+	background-color: var(--color-canvas-overlay) !important;
+}
+
 .gsc-comment-box-buttons .btn-primary:hover,
 .gsc-comment-box-buttons .btn-primary:active,
 .gsc-comment-box-buttons .btn-primary:focus,
