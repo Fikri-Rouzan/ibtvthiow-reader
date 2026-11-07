@@ -54,6 +54,33 @@ main {
 	background-color: transparent !important;
 }
 
-.BtnGroup-item:not(.BtnGroup-item--selected) .btn:hover {
+.BtnGroup-item:not(.BtnGroup-item--selected) .btn:hover,
+.gsc-comment-box-tabs button:not(.color-bg-canvas):hover {
 	color: var(--color-accent-fg) !important;
+}
+
+.gsc-comment-box-buttons .btn-primary:hover,
+.gsc-comment-box-buttons .btn-primary:active,
+.gsc-comment-box-buttons .btn-primary:focus,
+.gsc-comment-box-buttons .btn-primary:focus-visible,
+.gsc-comment-box-buttons button[type='submit']:not([disabled]):hover,
+.gsc-comment-box-buttons button[type='submit']:not([disabled]):active,
+.gsc-comment-box-buttons button[type='submit']:not([disabled]):focus,
+.gsc-comment-box-buttons button[type='submit']:not([disabled]):focus-visible {
+	background-color: var(--color-btn-primary-hover-bg) !important;
+	border-color: var(--color-btn-primary-hover-border) !important;
+	color: var(--color-btn-primary-text) !important;
+	outline: none !important;
+	box-shadow: none !important;
+}
+
+.gsc-comment-box-buttons button[type='submit'][disabled] {
+	background-color: transparent !important;
+	border-color: var(--color-border-default) !important;
+	color: var(--color-fg-muted) !important;
+}
+
+::selection {
+	background-color: #fed7aa !important;
+	color: #7c2d12 !important;
 }
