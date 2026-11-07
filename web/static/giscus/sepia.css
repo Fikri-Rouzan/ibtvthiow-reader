@@ -99,9 +99,13 @@ main {
 	box-shadow: none !important;
 }
 
-.gsc-comment > .color-bg-primary,
-.gsc-comment-box-tabs {
+.gsc-comment > .color-bg-primary {
 	background-color: var(--color-canvas-overlay) !important;
+	border-color: var(--color-border-default) !important;
+}
+
+.gsc-comment-box-tabs {
+	background-color: var(--color-canvas-default) !important;
 	border-color: var(--color-border-default) !important;
 }
 
