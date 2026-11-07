@@ -75,9 +75,28 @@ main {
 }
 
 .gsc-comment-box-buttons button[type='submit'][disabled] {
+	background-color: var(--color-btn-primary-bg) !important;
+	border-color: var(--color-btn-primary-border) !important;
+	color: var(--color-btn-primary-text) !important;
+	opacity: 0.5 !important;
+	cursor: not-allowed !important;
+}
+
+.gsc-comment-box-buttons button[type='button']:not(.btn-primary) {
 	background-color: transparent !important;
 	border-color: var(--color-border-default) !important;
-	color: var(--color-fg-muted) !important;
+	color: var(--color-fg-default) !important;
+}
+
+.gsc-comment-box-buttons button[type='button']:not(.btn-primary):hover,
+.gsc-comment-box-buttons button[type='button']:not(.btn-primary):active,
+.gsc-comment-box-buttons button[type='button']:not(.btn-primary):focus,
+.gsc-comment-box-buttons button[type='button']:not(.btn-primary):focus-visible {
+	background-color: var(--color-canvas-subtle) !important;
+	border-color: var(--color-accent-fg) !important;
+	color: var(--color-accent-fg) !important;
+	outline: none !important;
+	box-shadow: none !important;
 }
 
 ::selection {
