@@ -99,6 +99,12 @@ main {
 	box-shadow: none !important;
 }
 
+.gsc-comment > .color-bg-primary,
+.gsc-comment-box-tabs {
+	background-color: var(--color-canvas-overlay) !important;
+	border-color: var(--color-border-default) !important;
+}
+
 ::selection {
 	background-color: #d65d0e !important;
 	color: #ebdbb2 !important;
