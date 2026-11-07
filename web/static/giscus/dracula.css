@@ -108,7 +108,10 @@ main {
 	border-color: var(--color-border-default) !important;
 }
 
-.gsc-comment-box-tabs {
+.gsc-comment-box-tabs,
+.gsc-replies,
+.gsc-replies .gsc-reply,
+.color-bg-inset {
 	background-color: var(--color-canvas-default) !important;
 	border-color: var(--color-border-default) !important;
 }
