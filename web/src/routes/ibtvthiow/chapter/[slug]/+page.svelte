@@ -55,29 +55,29 @@
 
 <div
 	data-theme={settings.theme}
-	class="flex min-h-screen flex-col bg-bg-main text-text-primary transition-colors duration-200"
+	class="relative flex w-full min-w-0 grow flex-col overflow-x-hidden bg-bg-main text-text-primary transition-colors duration-200"
 >
 	{#key data.chapter.meta.slug}
 		<main
 			in:fade={{ duration: 250, easing: cubicOut }}
-			class="mx-auto w-full max-w-4xl grow space-y-8 px-4 py-6 sm:px-6 sm:py-10"
+			class="mx-auto w-full max-w-4xl grow space-y-8 px-4 py-8 sm:px-6 sm:py-12"
 		>
 			<!-- Article view -->
 			<article class="space-y-6">
 				{#key settings.fontFamily + settings.textAlign}
-					<div in:fade={{ duration: 180, easing: cubicOut }} class="space-y-16 sm:space-y-20">
-						<div class="flex flex-col items-center gap-5 pt-3 text-center sm:gap-6 sm:pt-5">
+					<div in:fade={{ duration: 180, easing: cubicOut }}>
+						<div class="flex flex-col items-center gap-5 text-center sm:gap-6">
 							<h1
 								class="text-2xl leading-tight font-bold text-accent sm:text-3xl md:text-4xl lg:text-5xl"
 							>
 								{data.chapter.meta.title}
 							</h1>
-							<div class="h-1 w-28 rounded-full bg-accent sm:w-36 md:w-40"></div>
+							<div class="mb-8 h-1 w-28 rounded-full bg-accent sm:mb-10 sm:w-36 md:w-40"></div>
 						</div>
 
 						<!-- Chapter content -->
 						<div
-							class="chapter-content transition-[font-size, line-height, font-weight] mb-10 duration-300 ease-out sm:mb-14"
+							class="chapter-content transition-[font-size, line-height, font-weight] py-4 duration-300 ease-out sm:py-6"
 						>
 							<MarkdownRenderer tokens={data.chapter.tokens} />
 						</div>

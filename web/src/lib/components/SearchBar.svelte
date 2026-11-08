@@ -13,7 +13,7 @@
 		bind:value
 		placeholder="Search chapter..."
 		aria-label="Search chapter list"
-		class="w-full rounded-lg border border-border-main bg-surface py-2 pr-10 pl-10 text-xs text-text-primary placeholder-text-muted transition-colors focus:border-accent focus:outline-none sm:py-2.5 sm:text-sm"
+		class="w-full rounded-lg border border-border-main bg-surface py-2 pr-10 pl-10 text-xs text-text-primary placeholder-text-muted transition-colors focus:border-accent focus:ring-0 focus:outline-none sm:py-2.5 sm:text-sm"
 	/>
 	{#if value}
 		<button

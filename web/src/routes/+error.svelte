@@ -28,10 +28,10 @@
 	<title>{page.status || 404} - Not Found</title>
 </svelte:head>
 
-<div class="flex grow bg-[url('/assets/background.jpg')] bg-cover bg-fixed bg-center">
-	<div
-		class="flex grow items-center justify-center bg-bg-main/80 px-4 py-12 text-center sm:px-6 md:py-20"
-	>
+<div
+	class="relative flex grow bg-[url('/assets/background.jpg')] bg-cover bg-scroll bg-center md:bg-fixed"
+>
+	<div class="flex grow items-center justify-center bg-bg-main/80 px-4 text-center sm:px-6">
 		<main class="flex max-w-xl flex-col items-center space-y-6">
 			<h1 class="text-6xl font-extrabold tracking-tight text-accent sm:text-7xl md:text-8xl">
 				{page.status || 404}

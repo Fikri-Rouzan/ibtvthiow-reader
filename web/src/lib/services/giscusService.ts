@@ -1,14 +1,14 @@
 import { GISCUS_CONFIG } from '#lib/config/giscus';
 
 /**
- * Fetch total discussion comment count for a specific chapter term from Giscus REST API.
- * Returns 0 if the discussion does not exist or network request fails.
+ * Fetches combined comment and reply count for a specific chapter discussion term
+ * using internal server API proxy.
  */
 export async function getCommentCount(term: string): Promise<number> {
 	if (!term || !GISCUS_CONFIG.repo) return 0;
 
 	try {
-		const url = new URL('https://giscus.app/api/discussions');
+		const url = new URL('/api/giscus-count', window.location.origin);
 		url.searchParams.set('repo', GISCUS_CONFIG.repo);
 		url.searchParams.set('term', term);
 
@@ -16,7 +16,7 @@ export async function getCommentCount(term: string): Promise<number> {
 		if (!response.ok) return 0;
 
 		const data = await response.json();
-		return data?.discussion?.totalCommentCount ?? 0;
+		return data?.totalCommentCount ?? 0;
 	} catch {
 		return 0;
 	}

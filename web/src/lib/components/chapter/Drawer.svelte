@@ -54,7 +54,7 @@
 	<!-- Drawer panel -->
 	<aside
 		transition:fly={{ x: 340, duration: 300, easing: cubicOut }}
-		class="fixed top-0 right-0 z-50 h-full w-full max-w-[75vw] overflow-y-auto border-l border-border-main bg-bg-main p-4 shadow-2xl transition-colors duration-200 sm:max-w-lg sm:p-6"
+		class="fixed top-0 right-0 z-50 h-full w-full max-w-[90vw] overflow-y-auto border-l border-border-main bg-bg-main p-4 shadow-2xl transition-colors duration-200 sm:max-w-lg sm:p-6"
 		aria-label={title}
 	>
 		<!-- Drawer header -->

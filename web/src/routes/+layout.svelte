@@ -31,7 +31,7 @@
 
 <div
 	data-page-container
-	class="flex min-h-screen flex-col bg-bg-main font-sans text-text-primary antialiased"
+	class="flex min-h-dvh flex-col overflow-x-hidden bg-bg-main font-sans text-text-primary antialiased"
 >
 	{@render children()}
 </div>

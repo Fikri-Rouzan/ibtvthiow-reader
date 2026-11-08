@@ -33,11 +33,7 @@
 </script>
 
 {#if term}
-	<section
-		id="comments-section"
-		class="mt-8 space-y-4 sm:mt-10"
-		aria-label="Chapter discussion comments"
-	>
+	<section id="comments-section" class="space-y-4" aria-label="Chapter discussion comments">
 		<!-- Toggle comments button -->
 		<div class="flex flex-col items-center justify-center">
 			<button

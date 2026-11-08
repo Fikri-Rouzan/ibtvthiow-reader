@@ -69,7 +69,9 @@
 	<title>{data.metadata.title}</title>
 </svelte:head>
 
-<div class="relative flex grow bg-[url('/assets/background.jpg')] bg-cover bg-fixed bg-center">
+<div
+	class="relative flex w-full grow overflow-x-hidden bg-[url('/assets/background.jpg')] bg-cover bg-scroll bg-center md:bg-fixed"
+>
 	<!-- Floating back icon -->
 	<a
 		href={resolve('/')}
@@ -80,10 +82,8 @@
 		<ArrowLeft class="h-5 w-5 sm:h-6 sm:w-6" />
 	</a>
 
-	<div class="flex grow flex-col bg-bg-main/80">
-		<main
-			class="mx-auto w-full max-w-5xl grow space-y-10 px-4 pt-10 pb-6 sm:px-6 sm:pt-14 sm:pb-10"
-		>
+	<div class="flex w-full min-w-0 grow flex-col bg-bg-main/80">
+		<main class="mx-auto w-full max-w-5xl grow space-y-10 px-4 py-8 sm:px-6 sm:py-12">
 			<header class="grid grid-cols-1 items-start gap-6 md:grid-cols-12">
 				<!-- Left column: Cover image and CTA -->
 				<div class="flex flex-col items-center gap-4 md:col-span-4 md:items-start lg:col-span-3">
@@ -134,7 +134,7 @@
 			</header>
 
 			<!-- Catalog controls & Chapter list -->
-			<section class="space-y-4 pt-2" aria-label="Chapter catalog and controls">
+			<section class="space-y-4" aria-label="Chapter catalog and controls">
 				<div class="flex items-center gap-2">
 					<SearchBar bind:value={searchQuery} />
 					<SortButton bind:sortOrder onSortChange={() => (currentPage = 1)} />

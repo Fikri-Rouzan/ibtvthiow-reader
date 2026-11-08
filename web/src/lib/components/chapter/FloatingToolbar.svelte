@@ -34,7 +34,7 @@
 	let animationFrameId: number | null = null;
 	const SCROLL_SPEED = 0.2;
 	let scrollAccumulator = 0;
-	let lastTapTime = 0;
+	let lastScrollY = 0;
 
 	const TOOLBAR_BTN_CLASS =
 		'inline-flex items-center justify-center rounded-xl p-2 transition-colors hover:bg-surface-hover hover:text-accent sm:p-2.5';
@@ -169,33 +169,39 @@
 	}
 
 	onMount(() => {
-		// Ignore manual scroll toolbar hiding when auto-scroll is actively running
+		lastScrollY = window.scrollY;
+
+		// Hide toolbar only when user performs significant manual scroll
 		const handleScroll = () => {
 			if (isAutoScrolling) return;
-			if (isMenuVisible) {
-				isMenuVisible = false;
+			const currentScrollY = window.scrollY;
+			if (Math.abs(currentScrollY - lastScrollY) > 15) {
+				if (isMenuVisible) {
+					isMenuVisible = false;
+				}
+				lastScrollY = currentScrollY;
 			}
 		};
 
-		// Desktop double click handler
-		const handleDblClick = (e: MouseEvent) => {
+		// Universal single tap / single click handler for mobile & desktop
+		const handleClick = (e: MouseEvent) => {
+			const target = e.target as HTMLElement | null;
+			if (!target) return;
+
+			// Ignore click if it occurs inside the floating toolbar container
 			const menuElement = document.getElementById('floating-menu');
-			if (menuElement && menuElement.contains(e.target as Node)) return;
+			if (menuElement && menuElement.contains(target)) return;
+
+			// Ignore click if it originates from an interactive element
+			if (target.closest('a, button, input, textarea, select, details, [role="button"]')) {
+				return;
+			}
+
+			// Ignore click if the user is actively selecting text
+			const selection = window.getSelection();
+			if (selection && selection.toString().trim().length > 0) return;
+
 			isMenuVisible = !isMenuVisible;
-		};
-
-		// Mobile touch double tap handler
-		const handleTouchStart = (e: TouchEvent) => {
-			const menuElement = document.getElementById('floating-menu');
-			if (menuElement && menuElement.contains(e.target as Node)) return;
-
-			const now = Date.now();
-			if (now - lastTapTime < 300) {
-				isMenuVisible = !isMenuVisible;
-				lastTapTime = 0;
-			} else {
-				lastTapTime = now;
-			}
 		};
 
 		const handleFullscreenChange = () => {
@@ -203,15 +209,13 @@
 		};
 
 		window.addEventListener('scroll', handleScroll, { passive: true });
-		window.addEventListener('dblclick', handleDblClick);
-		window.addEventListener('touchstart', handleTouchStart, { passive: true });
+		window.addEventListener('click', handleClick);
 		document.addEventListener('fullscreenchange', handleFullscreenChange);
 
 		return () => {
 			stopAutoScroll();
 			window.removeEventListener('scroll', handleScroll);
-			window.removeEventListener('dblclick', handleDblClick);
-			window.removeEventListener('touchstart', handleTouchStart);
+			window.removeEventListener('click', handleClick);
 			document.removeEventListener('fullscreenchange', handleFullscreenChange);
 		};
 	});
