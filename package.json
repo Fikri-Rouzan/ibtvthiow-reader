@@ -1,0 +1,15 @@
+{
+  "name": "ibtvthiow",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "pnpm --filter ./web dev",
+    "build": "pnpm --filter ./web build",
+    "preview": "pnpm --filter ./web preview",
+    "prepare": "pnpm --filter ./web prepare",
+    "check": "pnpm --filter ./web check",
+    "check:watch": "pnpm --filter ./web check:watch",
+    "lint": "pnpm --filter ./web lint",
+    "format": "pnpm --filter ./web format"
+  }
+}

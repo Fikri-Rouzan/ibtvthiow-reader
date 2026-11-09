@@ -18,6 +18,7 @@
 
 	let settings = $state<ReaderSettings>(getReaderSettings());
 	let activeDrawer = $state<DrawerType>(null);
+	let isMounted = $state(false);
 
 	// Synchronize settings state directly with document CSS custom variables and localStorage
 	$effect(() => {
@@ -39,6 +40,13 @@
 		if (data.chapter?.meta?.slug) {
 			setLastReadChapter(data.chapter.meta.slug);
 		}
+
+		// Defer enabling transitions until after initial layout paint and CSS variables settle
+		const timer = setTimeout(() => {
+			isMounted = true;
+		}, 100);
+
+		return () => clearTimeout(timer);
 	});
 
 	// Cleanup theme attribute when navigating away from chapter view
@@ -55,7 +63,9 @@
 
 <div
 	data-theme={settings.theme}
-	class="relative flex w-full min-w-0 grow flex-col overflow-x-hidden bg-bg-main text-text-primary transition-colors duration-200"
+	class="relative flex w-full min-w-0 grow flex-col overflow-x-hidden bg-bg-main text-text-primary {isMounted
+		? 'transition-colors duration-200'
+		: ''}"
 >
 	{#key data.chapter.meta.slug}
 		<main
@@ -77,7 +87,9 @@
 
 						<!-- Chapter content -->
 						<div
-							class="chapter-content transition-[font-size, line-height, font-weight] py-4 duration-300 ease-out sm:py-6"
+							class="chapter-content py-4 sm:py-6 {isMounted
+								? 'transition-[font-size, line-height, font-weight] duration-300 ease-out'
+								: ''}"
 						>
 							<MarkdownRenderer tokens={data.chapter.tokens} />
 						</div>
