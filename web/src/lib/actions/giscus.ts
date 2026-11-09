@@ -24,7 +24,7 @@ export function giscusAction(node: HTMLElement, options: GiscusActionOptions) {
 		script.setAttribute('data-category-id', GISCUS_CONFIG.categoryId);
 		script.setAttribute('data-mapping', 'specific');
 		script.setAttribute('data-term', term);
-		script.setAttribute('data-strict', '1');
+		script.setAttribute('data-strict', '0');
 		script.setAttribute('data-reactions-enabled', '1');
 		script.setAttribute('data-emit-metadata', '1');
 		script.setAttribute('data-input-position', 'top');
