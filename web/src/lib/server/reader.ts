@@ -36,7 +36,7 @@ export async function getChapterBySlug(slug: string) {
 
 	return {
 		meta: {
-			...(data as { title: string; index: number; discussion: string }),
+			...(data as { title: string; index: number }),
 			slug
 		},
 		tokens

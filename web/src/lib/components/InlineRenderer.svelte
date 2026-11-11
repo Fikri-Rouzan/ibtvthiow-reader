@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Token } from 'marked';
+	import { asset } from '$app/paths';
 	import InlineRenderer from './InlineRenderer.svelte';
 
 	let { tokens = [] }: { tokens?: Token[] } = $props();
@@ -26,5 +27,13 @@
 		<br />
 	{:else if token.type === 'escape'}
 		{token.text}
+	{:else if token.type === 'image'}
+		<img
+			src={asset(token.href.replace(/^\//, ''))}
+			alt={token.text}
+			title={token.title || undefined}
+			class="mx-auto my-6 block max-h-100 w-auto rounded-xl border border-border-main object-contain shadow-lg sm:max-h-150 md:max-h-190"
+			loading="lazy"
+		/>
 	{/if}
 {/each}

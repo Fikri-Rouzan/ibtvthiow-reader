@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup, Tag
 
 # Configuration Constants
 CHAPTERS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../chapters"))
+IMAGES_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../images"))
 TOOLS_DIR = os.path.abspath(os.path.dirname(__file__))
 IGNORED_KEYWORDS = {
     "cover",
@@ -19,15 +20,17 @@ IGNORED_KEYWORDS = {
 
 
 class EPUBParser:
-    """Modular parser for converting EPUB documents to cleaned Markdown chapters."""
+    """Modular parser for converting EPUB documents to cleaned Markdown chapters and extracting images."""
 
-    def __init__(self, epub_path: str, output_dir: str):
+    def __init__(self, epub_path: str, output_dir: str, images_dir: str):
         self.epub_path = epub_path
         self.output_dir = output_dir
+        self.images_dir = images_dir
         self.chapter_counter = 0
 
-        # Ensure output directory exists
+        # Ensure output and images directories exist
         os.makedirs(self.output_dir, exist_ok=True)
+        os.makedirs(self.images_dir, exist_ok=True)
 
     def is_ignored_item(self, item_name: str) -> bool:
         """Check if the document item should be skipped based on ignored keywords."""
@@ -79,13 +82,72 @@ class EPUBParser:
 
         return lines
 
-    def process_document_content(self, html_content: bytes) -> str:
-        """Extract paragraph and heading text from HTML, preserving inline styles and ignoring images."""
+    def find_image_item(self, book: epub.EpubBook, src_filename: str):
+        """Find EPUB image item matching the target source filename."""
+        src_base = os.path.basename(src_filename).lower()
+        for item in book.get_items_of_type(ebooklib.ITEM_IMAGE):
+            if os.path.basename(item.get_name()).lower() == src_base:
+                return item
+        return None
+
+    def process_document_content(self, html_content: bytes, book: epub.EpubBook) -> str:
+        """Extract paragraph, heading, and image content from HTML, saving images and converting tags to Markdown syntax."""
         soup = BeautifulSoup(html_content, "html.parser")
 
-        # Completely remove all image tags and embedded SVG elements
-        for img in soup.find_all(["img", "image", "svg", "picture"]):
-            img.decompose()
+        # Process and save embedded image files
+        image_counter = 1
+        for img in soup.find_all(["img", "image"]):
+            src = img.get("src") or img.get("href") or img.get("xlink:href")
+            if not src:
+                img.decompose()
+                continue
+
+            src_filename = os.path.basename(src)
+            image_item = self.find_image_item(book, src_filename)
+            if image_item:
+                ext = os.path.splitext(src_filename)[1].lower()
+                if not ext or ext not in [
+                    ".jpg",
+                    ".jpeg",
+                    ".png",
+                    ".webp",
+                    ".gif",
+                    ".svg",
+                ]:
+                    ext = ".jpg"
+
+                image_filename = f"{self.chapter_counter:03d}_{image_counter:02d}{ext}"
+                alt_text = (
+                    f"Image Chapter {self.chapter_counter:03d}-{image_counter:02d}"
+                )
+                markdown_image = f"![{alt_text}](/images/{image_filename})"
+                image_dest_path = os.path.join(self.images_dir, image_filename)
+
+                with open(image_dest_path, "wb") as f:
+                    f.write(image_item.get_content())
+
+                # Replace image element directly inside paragraph or wrap parent container to avoid duplicate paragraphs
+                parent_p = img.find_parent("p")
+                if parent_p:
+                    svg_or_pic = img.find_parent(["svg", "picture"])
+                    if svg_or_pic:
+                        svg_or_pic.replace_with(markdown_image)
+                    else:
+                        img.replace_with(markdown_image)
+                else:
+                    new_p = soup.new_tag("p")
+                    new_p.string = markdown_image
+                    container = img.find_parent(["svg", "picture"])
+                    target_tag = container if container else img
+                    target_tag.replace_with(new_p)
+
+                image_counter += 1
+            else:
+                img.decompose()
+
+        # Remove remaining empty SVG or picture containers
+        for tag in soup.find_all(["svg", "picture"]):
+            tag.decompose()
 
         extracted_lines = []
 
@@ -121,7 +183,7 @@ class EPUBParser:
                 print(f"[!] Ignored non-chapter document: {item_name}")
                 continue
 
-            content = self.process_document_content(item.get_content())
+            content = self.process_document_content(item.get_content(), book)
             if not content.strip():
                 continue
 
@@ -150,7 +212,9 @@ def get_target_epub_file() -> str:
 if __name__ == "__main__":
     try:
         epub_file = get_target_epub_file()
-        parser = EPUBParser(epub_path=epub_file, output_dir=CHAPTERS_DIR)
+        parser = EPUBParser(
+            epub_path=epub_file, output_dir=CHAPTERS_DIR, images_dir=IMAGES_DIR
+        )
         parser.parse()
     except Exception as e:
         print(f"[X] Error during parsing: {e}")

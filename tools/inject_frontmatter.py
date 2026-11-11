@@ -73,9 +73,7 @@ class FrontmatterProcessor:
         title, body_content = self.extract_title_and_body(raw_content, default_title)
 
         # Build frontmatter post structure
-        post = frontmatter.Post(
-            body_content, title=title, index=index, discussion=str(index)
-        )
+        post = frontmatter.Post(body_content, title=title, index=index)
 
         # Write formatted frontmatter back to the original file
         with open(file_path, "w", encoding="utf-8") as f:
@@ -111,7 +109,7 @@ class FrontmatterProcessor:
             entry = self.process_file_in_place(file_path)
             self.chapters_meta_list.append(entry)
             print(
-                f"[+] Added Frontmatter to {os.path.basename(file_path)} -> Title: '{entry['title']}' | Discussion: '{entry['index']}'"
+                f"[+] Added Frontmatter to {os.path.basename(file_path)} -> Title: '{entry['title']}'"
             )
 
         total_count = len(self.chapters_meta_list)
