@@ -19,12 +19,12 @@ export default defineConfig({
 			},
 			adapter: adapter()
 		}),
-		// Copy images from root /images directory into static build output
+		// Copy images directory directly into the client build output root
 		viteStaticCopy({
 			targets: [
 				{
-					src: `${imagesPath}/*`,
-					dest: 'images'
+					src: imagesPath,
+					dest: ''
 				}
 			]
 		})
