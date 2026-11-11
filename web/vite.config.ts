@@ -1,7 +1,12 @@
 import tailwindcss from '@tailwindcss/vite';
 import adapter from '@sveltejs/adapter-cloudflare';
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
+import { defineConfig, normalizePath } from 'vite';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
+import path from 'node:path';
+
+// Resolve and normalize absolute path to root /images directory for cross-platform globbing
+const imagesPath = normalizePath(path.resolve(import.meta.dirname, '../images'));
 
 export default defineConfig({
 	plugins: [
@@ -13,6 +18,15 @@ export default defineConfig({
 					filename.split(/[/\\]/).includes('node_modules') ? undefined : true
 			},
 			adapter: adapter()
+		}),
+		// Copy images from root /images directory into static build output
+		viteStaticCopy({
+			targets: [
+				{
+					src: `${imagesPath}/*`,
+					dest: 'images'
+				}
+			]
 		})
 	]
 });
