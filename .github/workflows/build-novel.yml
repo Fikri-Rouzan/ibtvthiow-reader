@@ -6,15 +6,11 @@ on:
     # Run once on the 1st day of every month at 00:00 UTC
     - cron: "0 0 1 * *"
   push:
-    # Trigger build only when novel content or generator files change
-    paths:
-      - "chapters/**"
-      - "images/**"
-      - "web/static/assets/cover.jpg"
-      - "tools/**"
-      - ".github/workflows/build-novel.yml"
+    # Trigger on pushes to any branch
+    branches:
+      - "**"
 
-# Required to create tags and publish GitHub Releases
+# Required to update release tags and publish GitHub Releases
 permissions:
   contents: write
 
@@ -23,11 +19,46 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Full history is required to diff changes against today's release tag
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      # Determine release tag and skip EPUB/PDF build if only non-novel files changed today
+      - name: Prepare Release Metadata & Check Changes
+        id: release_meta
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DATE_STR=$(date -u +'%d.%m.%Y')
+          TAG="v${DATE_STR}"
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "title=IBTVTHIOW ${TAG}" >> "$GITHUB_OUTPUT"
+
+          # Always build on manual/scheduled runs or if today's release does not exist yet
+          if [ "${{ github.event_name }}" != "push" ] || ! gh release view "$TAG" >/dev/null 2>&1; then
+            echo "should_build=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Check files changed between today's released tag commit and current HEAD
+          TAG_COMMIT=$(git rev-list -n 1 "$TAG" 2>/dev/null || echo "")
+          if [ -z "$TAG_COMMIT" ]; then
+            echo "should_build=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          CHANGED_FILES=$(git diff --name-only "$TAG_COMMIT" "$GITHUB_SHA")
+          if echo "$CHANGED_FILES" | grep -Eq '^(chapters/|images/|web/static/assets/cover\.jpg$|tools/|\.github/workflows/build-novel\.yml$)'; then
+            echo "should_build=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "should_build=false" >> "$GITHUB_OUTPUT"
+          fi
 
       # Install system libraries and CJK/Emoji fonts for WeasyPrint
       - name: Install WeasyPrint system dependencies and CJK/Emoji fonts
+        if: steps.release_meta.outputs.should_build == 'true'
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
@@ -42,6 +73,7 @@ jobs:
             fonts-noto-color-emoji
 
       - name: Set up Python
+        if: steps.release_meta.outputs.should_build == 'true'
         uses: actions/setup-python@v7
         with:
           python-version: "3.13"
@@ -49,31 +81,32 @@ jobs:
           cache-dependency-path: "tools/requirements.txt"
 
       - name: Install Python packages
+        if: steps.release_meta.outputs.should_build == 'true'
         run: |
           python -m pip install --upgrade pip
           pip install -r tools/requirements.txt
 
       - name: Generate EPUB
+        if: steps.release_meta.outputs.should_build == 'true'
         env:
           PYTHONUTF8: "1"
           LANG: "C.UTF-8"
         run: python tools/create_epub.py
 
       - name: Generate PDF
+        if: steps.release_meta.outputs.should_build == 'true'
         env:
           PYTHONUTF8: "1"
           LANG: "C.UTF-8"
         run: python tools/create_pdf.py
 
-      # Generate date-based release tag and title (e.g., v12.11.2026)
-      - name: Prepare Release Metadata
-        id: release_meta
+      # Point today's release tag to the latest commit
+      - name: Update Release Tag
         run: |
-          DATE_STR=$(date -u +'%d.%m.%Y')
-          echo "tag=v${DATE_STR}" >> "$GITHUB_OUTPUT"
-          echo "title=IBTVTHIOW v${DATE_STR}" >> "$GITHUB_OUTPUT"
+          git tag -f "${{ steps.release_meta.outputs.tag }}" "$GITHUB_SHA"
+          git push -f origin "${{ steps.release_meta.outputs.tag }}"
 
-      # Attach generated EPUB and PDF to the latest GitHub Release
+      # Create or update GitHub Release
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v3
         env:
@@ -82,6 +115,4 @@ jobs:
           tag_name: ${{ steps.release_meta.outputs.tag }}
           name: ${{ steps.release_meta.outputs.title }}
           make_latest: true
-          files: |
-            novel/I-Became-The-Villain-The-Hero-Is-Obsessed-With.epub
-            novel/I-Became-The-Villain-The-Hero-Is-Obsessed-With.pdf
+          files: ${{ steps.release_meta.outputs.should_build == 'true' && 'novel/*' || '' }}
