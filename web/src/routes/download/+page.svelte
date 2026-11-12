@@ -3,6 +3,17 @@
 	import type { PageData } from './$types';
 	import { ArrowLeft, Download } from '@lucide/svelte';
 
+	// Direct GitHub Releases permalink to always fetch the latest compiled archives
+	const GITHUB_RELEASE_BASE_URL =
+		'https://github.com/Fikri-Rouzan/ibtvthiow-reader/releases/latest/download';
+	const NOVEL_FILE_BASE = 'I-Became-The-Villain-The-Hero-Is-Obsessed-With';
+
+	const EPUB_FILENAME = `${NOVEL_FILE_BASE}.epub`;
+	const PDF_FILENAME = `${NOVEL_FILE_BASE}.pdf`;
+
+	const EPUB_DOWNLOAD_URL = `${GITHUB_RELEASE_BASE_URL}/${EPUB_FILENAME}`;
+	const PDF_DOWNLOAD_URL = `${GITHUB_RELEASE_BASE_URL}/${PDF_FILENAME}`;
+
 	let { data }: { data: PageData } = $props();
 </script>
 
@@ -47,7 +58,9 @@
 						sessions.
 					</p>
 					<a
-						href="#"
+						href={EPUB_DOWNLOAD_URL}
+						download={EPUB_FILENAME}
+						rel="external"
 						class="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-4 py-2.5 text-xs font-bold text-bg-main shadow-md transition-colors hover:bg-accent-hover sm:py-3 sm:text-sm"
 					>
 						<Download class="h-4 w-4 shrink-0 sm:h-5 sm:w-5" />
@@ -69,7 +82,9 @@
 						displays.
 					</p>
 					<a
-						href="#"
+						href={PDF_DOWNLOAD_URL}
+						download={PDF_FILENAME}
+						rel="external"
 						class="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-accent bg-surface px-4 py-2.5 text-xs font-bold text-text-primary shadow-md transition-colors hover:border-accent-hover hover:bg-surface-hover sm:py-3 sm:text-sm"
 					>
 						<Download class="h-4 w-4 shrink-0 text-accent sm:h-5 sm:w-5" />
