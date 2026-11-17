@@ -19,37 +19,47 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Full history is required to diff changes against today's release tag
+      # Full history is required to diff changes against the current monthly release tag
       - name: Checkout repository
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      # Determine release tag and skip EPUB/PDF build if only non-novel files changed today
+      # Reuse this month's release tag if it exists and skip EPUB/PDF rebuild for non-novel changes
       - name: Prepare Release Metadata & Check Changes
         id: release_meta
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           DATE_STR=$(date -u +'%d.%m.%Y')
-          TAG="v${DATE_STR}"
+          MONTH_YEAR=$(date -u +'%m.%Y')
+          MONTH_REGEX="^v([0-9]{2}\.)?${MONTH_YEAR//./\\.}$"
+
+          # Find an existing release tag for the current month
+          EXISTING_TAG=$(gh release list --limit 30 --json tagName --jq '.[].tagName' | grep -E "$MONTH_REGEX" | head -n 1 || true)
+          if [ -n "$EXISTING_TAG" ]; then
+            TAG="$EXISTING_TAG"
+          else
+            TAG="v${DATE_STR}"
+          fi
+
           echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
           echo "title=IBTVTHIOW ${TAG}" >> "$GITHUB_OUTPUT"
 
-          # Always build on manual/scheduled runs or if today's release does not exist yet
-          if [ "${{ github.event_name }}" != "push" ] || ! gh release view "$TAG" >/dev/null 2>&1; then
+          # Always build on manual/scheduled runs or if no release exists for this month yet
+          if [ "${{ github.event_name }}" != "push" ] || [ -z "$EXISTING_TAG" ]; then
             echo "should_build=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
-          # Rebuild if either EPUB or PDF asset is missing from today's release
+          # Rebuild if either EPUB or PDF asset is missing from this month's release
           ASSETS=$(gh release view "$TAG" --json assets --jq '[.assets[].name] | join(",")')
           if ! echo "$ASSETS" | grep -q '\.epub' || ! echo "$ASSETS" | grep -q '\.pdf'; then
             echo "should_build=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
-          # Check files changed between today's released tag commit and current HEAD
+          # Check files changed between the current monthly release tag commit and HEAD
           TAG_COMMIT=$(git rev-list -n 1 "$TAG" 2>/dev/null || echo "")
           if [ -z "$TAG_COMMIT" ]; then
             echo "should_build=true" >> "$GITHUB_OUTPUT"
@@ -108,13 +118,13 @@ jobs:
           LANG: "C.UTF-8"
         run: python tools/create_pdf.py
 
-      # Point today's release tag to the latest commit
+      # Point the monthly release tag to the latest commit
       - name: Update Release Tag
         run: |
           git tag -f "${{ steps.release_meta.outputs.tag }}" "$GITHUB_SHA"
           git push -f origin "${{ steps.release_meta.outputs.tag }}"
 
-      # Create or update GitHub Release
+      # Create or overwrite the monthly GitHub Release
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v3
         env:
